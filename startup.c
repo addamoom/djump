@@ -161,7 +161,7 @@ static OBJECT ball ={
 static OBJECT platform ={
 	&platform_geometry,
 	0,0,
-	1,1,
+	40,30,
 	draw_object,
 	clear_object,
 	genNewPlatform,
@@ -171,15 +171,19 @@ static OBJECT platform ={
 void main(void)
 {
 	POBJECT p = &ball;
+	POBJECT plat = &platform;
 	init_gpio();
 	graphic_initialize();
 	#ifndef SIMULATOR
 		graphics_clear_screen();
 	#endif
 	p->set_speed(p, 2, 1);
+	plat->draw(plat);
+	
 	while(1)
 	{
 		p->move(p);
+		
 		delay_milli(40);
 	}
 	
