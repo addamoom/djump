@@ -1,1 +1,2 @@
-void genPlatform(void);
+void genNewPlatform(void);
+void platColDetect(void);
