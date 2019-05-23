@@ -33,6 +33,15 @@ GEOMETRY ball_geometry =
 			{3,2}
 		}
 };
+GEOMETRY plat_geometry =
+{
+		10,
+		4,4,
+		{
+			{0,0}, {1,0}, {2,0}, {3,0}, {4,0},
+			{5,0}, {6,0}, {7,0}, {8,0}, {9,0}
+		}
+};
 
 
 #define stick (*((volatile systick *) 0xE000E010))
@@ -106,12 +115,12 @@ static OBJECT ball ={
 	set_object_speed
 };
 static OBJECT platform ={
-	&platform_geometry,
+	&plat_geometry,
 	0,0,
 	40,30,
 	draw_object,
 	clear_object,
-	genNewPlatform,
+	move_object,
 	set_object_speed
 };			
 
