@@ -1,27 +1,6 @@
 #include "displayfunk.h"
+#include "types.h"
 #include <stdlib.h>
-
-
-typedef struct {
-	unsigned int ctrl;
-	unsigned int load;
-	unsigned int val;
-	unsigned int calib;
-} systick;
-
-typedef struct {
-	unsigned int moder;				// 32 bit
-	unsigned short otyper;			// 16 bit
-	unsigned short otReserved;		// 16 bit, reserverad
-	unsigned int ospeedr;			// 32 bit
-	unsigned int pupdr;				// 32 bit
-	unsigned char idrLow;			// 8 bit
-	unsigned char idrHigh;			// 8 bit
-	unsigned short idrReserved;		// 16 bit, reserverad
-	unsigned char odrLow;			// 8 bit
-	unsigned char odrHigh;			// 8 bit
-	unsigned short odrReserved; 	// 16 bit, reserverad
-} GPIO;
 
 #define stick (*((volatile systick *) 0xE000E010))
 #define GPIO_E (*((volatile GPIO *) 0x40021000))

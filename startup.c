@@ -19,63 +19,10 @@ __asm volatile(
 	".L1: B .L1\n"				/* never return */
 	) ;
 }
-typedef struct {
-	uint32_t ctrl;
-	uint32_t load;
-	uint32_t val;
-	uint32_t calib;
-} systick;
-
-typedef struct {
-	uint32_t moder;				// 32 bit
-	uint16_t otyper;			// 16 bit
-	uint16_t otReserved;		// 16 bit, reserverad
-	uint32_t ospeedr;			// 32 bit
-	uint32_t pupdr;				// 32 bit
-	uint8_t idrLow;			// 8 bit
-	uint8_t idrHigh;			// 8 bit
-	uint16_t idrReserved;		// 16 bit, reserverad
-	uint8_t odrLow;			// 8 bit
-	uint8_t odrHigh;			// 8 bit
-	uint16_t odrReserved; 	// 16 bit, reserverad
-} GPIO;
-
-typedef struct tPoint
-{
-	unsigned char x;
-	unsigned char y;
-}POINT;
 
 #define SIMULATOR 1
-#define MAX_POINTS (unsigned char) 20
-typedef struct tGeometry
-{
-	int numpoints;
-	int sizex;
-	int sizey;
-	POINT px[ MAX_POINTS ];
-} GEOMETRY, *PGEOMETRY;
-
-typedef struct tObj{
-	PGEOMETRY geo;
-	int dirx,diry;
-	int posx,posy;
-	void (* draw) (struct tObj *);
-	void (* clear ) (struct tObj *);
-	void (* move ) (struct tObj *);
-	void (* set_speed ) (struct tObj *,int,int);
-} OBJECT, *POBJECT;
 
 GEOMETRY ball_geometry =
-{
-		10,
-		10,1,
-		{
-			{0,0}, {1,0}, {2,0}, {3,0}, {4,0},
-			{5,0}, {6,0}, {7,0}, {8,0}, {9,0},
-		}
-};
-GEOMETRY platform_geometry =
 {
 		12,
 		4,4,
@@ -145,7 +92,7 @@ void move_object(POBJECT o){
 	}
 	
 	if(o->posy>(65-sizey))
-		game_over();
+		game_over(o);
 		
 	draw_object(o);
 }
@@ -158,15 +105,6 @@ static OBJECT ball ={
 	move_object,
 	set_object_speed
 };
-static OBJECT platform ={
-	&platform_geometry,
-	0,0,
-	1,1,
-	draw_object,
-	clear_object,
-	genNewPlatform,
-	set_object_speed
-};			
 
 void main(void)
 {
@@ -176,7 +114,7 @@ void main(void)
 	#ifndef SIMULATOR
 		graphics_clear_screen();
 	#endif
-	p->set_speed(p, 2, 1);
+	p->set_speed(p, 1, 0);
 	while(1)
 	{
 		p->move(p);
