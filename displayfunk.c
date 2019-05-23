@@ -111,6 +111,7 @@ void select_controller(unsigned char controller){
 }
 void graphic_wait_ready(void){
 	
+	unsigned char c;
 	graphic_ctrl_bit_clear(B_E);
 	GPIO_E.moder =  0x00005555;
 	graphic_ctrl_bit_clear(B_RS);
@@ -120,9 +121,10 @@ void graphic_wait_ready(void){
 	while(1){
 		graphic_ctrl_bit_set(B_E);
 		delay_500ns();
+		c = GPIO_E.idrHigh;
 		graphic_ctrl_bit_clear(B_E);
 		delay_500ns();
-		if((GPIO_E.idrHigh & 0x80) == 0)
+		if((c & 0x80) == 0)
 			break;
 		
 	}
