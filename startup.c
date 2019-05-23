@@ -12,7 +12,7 @@ void startup(void) __attribute__((naked)) __attribute__((section (".start_sectio
 
 void startup ( void )
 {
-asm volatile(
+__asm volatile(
 	" LDR R0,=0x2001C000\n"		/* set stack */
 	" MOV SP,R0\n"
 	" BL main\n"				/* call main */
@@ -46,6 +46,7 @@ typedef struct tPoint
 	unsigned char y;
 }POINT;
 
+#define SIMULATOR 1
 #define MAX_POINTS (unsigned char) 20
 typedef struct tGeometry
 {
@@ -126,23 +127,32 @@ void clear_object(POBJECT o){
 	}
 }
 void move_object(POBJECT o){
+	int sizex, sizey;	
 	clear_object(o);
+	doodleAcceleration(o);
 	o->posx += o->dirx; 
 	o->posy	+= o->diry;
-	if(o->posx<1 || o->posx>128){
+	sizex = o->geo->sizex;
+	sizey = o->geo->sizey;
+	
+	if((o->posx<1)||(o->posx > (129-sizex))){
 		o->dirx = ~(o->dirx);
 		o->posx += o->dirx;
 	}
-	if(o->posy<1 || o->posy>64){
+	if(o->posy<1){
 		o->diry = ~(o->diry);
 		o->posy += o->diry;
 	}
+	
+	if(o->posy>(65-sizey))
+		game_over();
+		
 	draw_object(o);
 }
 static OBJECT ball ={
 	&ball_geometry,
 	0,0,
-	1,1,
+	50,40, // initial position
 	draw_object,
 	clear_object,
 	move_object,
@@ -166,7 +176,7 @@ void main(void)
 	#ifndef SIMULATOR
 		graphics_clear_screen();
 	#endif
-	p->set_speed(p, 4, 1);
+	p->set_speed(p, 2, 1);
 	while(1)
 	{
 		p->move(p);

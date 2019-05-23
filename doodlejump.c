@@ -49,3 +49,15 @@ void draw_platform(POBJECT o){
 void platColDetect(void){
 	
 }
+void doodleAcceleration (POBJECT o) {
+	if(o->diry > -8 )
+	{
+		o->diry -= 1;
+	}
+	return;
+}
+void game_over(POBJECT o) {
+	// tillfällig
+	o->diry = ~(o->diry);
+	o->posy += o->diry;
+}
