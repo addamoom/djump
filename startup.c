@@ -67,6 +67,15 @@ typedef struct tObj{
 
 GEOMETRY ball_geometry =
 {
+		10,
+		10,1,
+		{
+			{0,0}, {1,0}, {2,0}, {3,0}, {4,0},
+			{5,0}, {6,0}, {7,0}, {8,0}, {9,0},
+		}
+};
+GEOMETRY platform_geometry =
+{
 		12,
 		4,4,
 		{
@@ -139,6 +148,15 @@ static OBJECT ball ={
 	move_object,
 	set_object_speed
 };
+static OBJECT platform ={
+	&platform_geometry,
+	0,0,
+	1,1,
+	draw_object,
+	clear_object,
+	genNewPlatform,
+	set_object_speed
+};			
 
 void main(void)
 {
@@ -146,7 +164,7 @@ void main(void)
 	init_gpio();
 	graphic_initialize();
 	#ifndef SIMULATOR
-		graphic_clearScreen();
+		graphics_clear_screen();
 	#endif
 	p->set_speed(p, 4, 1);
 	while(1)
