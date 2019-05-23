@@ -1,3 +1,4 @@
+#include "types.h"
 
 void delay_250ns(void);
 void delay_mikro(unsigned int us);

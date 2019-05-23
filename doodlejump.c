@@ -1,29 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
-typedef struct tPoint
-{
-	unsigned char x;
-	unsigned char y;
-}POINT;
-
-#define MAX_POINTS (unsigned char) 20
-typedef struct tGeometry
-{
-	int numpoints;
-	int sizex;
-	int sizey;
-	POINT px[ MAX_POINTS ];
-} GEOMETRY, *PGEOMETRY;
-
-typedef struct tObj{
-	PGEOMETRY geo;
-	int dirx,diry;
-	int posx,posy;
-	void (* draw) (struct tObj *);
-	void (* clear ) (struct tObj *);
-	void (* move ) (struct tObj *);
-	void (* set_speed ) (struct tObj *,int,int);
-} OBJECT, *POBJECT;
+#include "doodlejump.h"
+#include "types.h"
 
 void genNewPlatform(POBJECT plat, char i){
 	//this function moves the platform to a new position
@@ -52,7 +30,7 @@ void platColDetect(void){
 void doodleAcceleration (POBJECT o) {
 	if(o->diry > -8 )
 	{
-		o->diry -= 1;
+		o->diry += 1;
 	}
 	return;
 }
