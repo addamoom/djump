@@ -135,7 +135,7 @@ void main(void)
 	#ifndef SIMULATOR
 		graphics_clear_screen();
 	#endif
-	p->set_speed(p, 1, 0);
+	p->set_speed(p, 3, 3);
 	plat->draw(plat);
 	while(1)
 	{

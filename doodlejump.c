@@ -38,7 +38,7 @@ struct colLine calcLine(POINT curr, POINT next){
 	
 	int p=2*dy-dx;
 	
-	while(curr.x<next.x){
+	while(x<next.x){
 		temp.px[i].x =	x;	
 		temp.px[i].y =  y;
 		pixel(x,y,1);	//Rita linjen i debug syfte, ta bort sen
@@ -55,6 +55,31 @@ struct colLine calcLine(POINT curr, POINT next){
 	temp.numpoints = i;
 	
 	return temp;
+	
+	
+/*	int i = 0;
+	LINE temp;
+	int x = curr.x; 			
+	int y = curr.y;
+	
+	int m = 2*(next.y-curr.y);
+	int err = m - (next.x-curr.x);
+	
+	for(;x<=next.x;x++){
+		temp.px[i].x =	x;	
+		temp.px[i].y =  y;
+		i++;
+		pixel(x,y,1);	//Rita linjen i debug syfte, ta bort sen
+		err += m;
+		
+		if(err >=0){
+			y++;
+			err -= 2*(next.x-curr.x);
+		}
+	}
+	temp.numpoints = i;
+	
+	return temp;*/
 }
 
 void platColDetect(POBJECT ball, POBJECT platform){
