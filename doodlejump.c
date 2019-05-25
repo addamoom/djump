@@ -11,7 +11,7 @@ void draw_platform(POBJECT o){
 
 	for(int i=0;i<10;i++){
 		p = o->geo->px[i];
-		pixel(o->posx+p.x,o->posy+p.y,1); //bör försöka lösa implicit varningen här genom att flytta runt functionerna
+		pixel(o->posx+p.x,o->posy+p.y,1); //bör försöka lösa implicit varningen här genom att flytta runt functionerna (funkar dock ändå eftersom pixel returnerar void)
 	}
 }
 
@@ -21,17 +21,59 @@ void genNewPlatform(POBJECT plat, char i){
 	
 	i = i%4;
 	
-	plat->posx = (int) positions[i].x;
-	plat->posy = (int) positions[i].y;
-	
+	plat->posx = (int) positions[(int) i].x;
+	plat->posy = (int) positions[(int) i].y;
+	plat->clear(plat);
 	draw_platform(plat);
 	
 }
+struct colLine calcLine(POINT curr, POINT next){
+	
+	LINE temp;
+	int i = 0;				
+	int dx = next.x-curr.x;
+	int dy = next.y-curr.y;
+	int x = curr.x; 			
+	int y = curr.y;				
+	
+	int p=2*dy-dx;
+	
+	while(curr.x<next.x){
+		temp.px[i].x =	x;	
+		temp.px[i].y =  y;
+		pixel(x,y,1);	//Rita linjen i debug syfte, ta bort sen
+		i++;
+		
+		if(p>=0){
+			y++;
+			p=p+2*dy-2*dx;
+		}
+		else
+			p=p+2*dy;
+		x++;
+	}
+	temp.numpoints = i;
+	
+	return temp;
+}
 
 void platColDetect(POBJECT ball, POBJECT platform){
+	
+	POINT curr;
+	curr.x=ball->posx;
+	curr.y=ball->posy;
+	
+	POINT next;
+	curr.x=ball->posx+ball->dirx;
+	curr.y=ball->posy+ball->diry;
+	
+	LINE ballLine;
+	
+	ballLine = calcLine(curr,next);
+	
 	for(int i =0;i<10;i++){
 		if((ball->posx==(platform->posx+i)) & (ball->posy==platform->posy)){
-			ball->set_speed(ball, ball->dirx, ball->diry+2);
+			ball->set_speed(ball, ball->dirx, -ball->diry+2);
 			genNewPlatform(platform, score);
 			
 		}
