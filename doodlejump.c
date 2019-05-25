@@ -57,7 +57,7 @@ struct colLine calcLine(POINT curr, POINT next){
 	return temp;
 	
 	
-/*	int i = 0;
+	/*int i = 0;
 	LINE temp;
 	int x = curr.x; 			
 	int y = curr.y;
@@ -89,8 +89,8 @@ void platColDetect(POBJECT ball, POBJECT platform){
 	curr.y=ball->posy;
 	
 	POINT next;
-	curr.x=ball->posx+ball->dirx;
-	curr.y=ball->posy+ball->diry;
+	next.x= ball->posx+ball->dirx;
+	next.y= ball->posy+ball->diry;
 	
 	LINE ballLine;
 	
