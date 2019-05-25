@@ -60,6 +60,8 @@ GEOMETRY plat_geometry =
 #define LCD_DISP_START (unsigned char) 0xC0
 #define LCD_BUSY (unsigned char) 0x80
 
+int score;
+
 
 void set_object_speed(POBJECT o,int speedx,int speedy)
 {
@@ -117,7 +119,7 @@ static OBJECT ball ={
 static OBJECT platform ={
 	&plat_geometry,
 	0,0,
-	40,30,
+	50,50,
 	draw_object,
 	clear_object,
 	move_object,
@@ -138,8 +140,16 @@ void main(void)
 	while(1)
 	{
 		p->move(p);
+		platColDetect(p,plat);
 		
 		delay_milli(40);
+		
+		//if(win){
+		//	draw_gameover()
+		//	while (key a not presed){inget}
+		//	intitializera
+		//	win=0
+		//}
 	}
 	
 }
