@@ -51,7 +51,7 @@ static unsigned char collision_flag;
 #define HOR_EDGE 1
 #define VERT_EDGE 2
 
-int score;
+static int score;
 
 
 void set_object_speed(POBJECT o,int speedx,int speedy)
@@ -143,6 +143,7 @@ void main(void)
 	char init_message1[] = "PRESS ANY KEY";
 	char init_message2[] = "TO START!";
 	char start_game_message[] = "JUMP ON THE PLATFORMS!";
+	score = 0;
 	
 	POBJECT p = &ball;
 	POBJECT plat = &platform;
@@ -173,8 +174,11 @@ void main(void)
 	while(1)
 	{
 		p->move(p);
-		if(!collision_flag)
+		if(!collision_flag){
 			collision_flag = platColDetect(p,plat);
+			score++;
+		}
+			
 		draw_object(p);
 		delay_milli(40);
 		c=keyb();

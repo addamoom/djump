@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "doodlejump.h"
 #include "types.h"
+#include "displayfunk.h"
 
 extern int score;
 
