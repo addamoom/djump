@@ -50,9 +50,27 @@ void delay_500ns(void){
 		delay_250ns();
 }
 void init_gpio(){
+	#ifdef USBDM
+		*((unsigned long *)0x40023830) = 0x18;
+		__asm volatile("LDR R0,=0x08000209\n BLX R0 \n");
+	#endif
+	// hela E som utport
 	GPIO_E.moder = 0x55555555;
 	GPIO_E.otyper = 0x0000;
-	GPIO_E.pupdr = 55555555;
+	
+	// förbered för input (pull-up)
+	GPIO_E.pupdr = 0x55555555;
+	
+	GPIO_D.moder &= 0x00000000;
+	GPIO_D.moder |= 0x55005555;
+	
+	// TYPER
+	GPIO_D.otyper &= 0x0f00;
+	
+	//PUPDR
+	GPIO_D.pupdr &= 0x0000ffff;
+	GPIO_D.pupdr |= 0xffaa0000;
+	
 	GPIO_E.odrLow |= B_SELECT;
 }
 

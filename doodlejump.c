@@ -85,7 +85,7 @@ struct colLine calcLine(POINT curr, POINT next){
 
 unsigned char platColDetect(POBJECT ball, POBJECT platform){
 	
-	POINT curr;
+	/*POINT curr;
 	curr.x=ball->posx;
 	curr.y=ball->posy;
 	
@@ -95,7 +95,7 @@ unsigned char platColDetect(POBJECT ball, POBJECT platform){
 	
 	LINE ballLine;
 	
-	ballLine = calcLine(curr,next);
+	ballLine = calcLine(curr,next);*/
 	
 	for(int i =0;i<platform->geo->numpoints;i++){
 		for(int j =0;j<ball->geo->sizex;j++){
