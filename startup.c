@@ -164,19 +164,14 @@ void main(void)
 	#ifndef SIMULATOR
 		graphics_clear_screen();
 	#endif
-<<<<<<< HEAD
 	
 	game_over_flag = 0;
 	collision_flag = 0;
 	p->set_speed(p, 6, 2);
-=======
-	p->set_speed(p, 3, 3);
->>>>>>> 1e9869aa7172fe1220982b5b300188af67844b57
 	plat->draw(plat);
 	while(1)
 	{
 		p->move(p);
-<<<<<<< HEAD
 		delay_milli(40);
 		
 		if(game_over_flag)
@@ -188,18 +183,6 @@ void main(void)
 			}
 			
 		}
-=======
-		platColDetect(p,plat);
-		
-		delay_milli(40);
-		
-		//if(win){
-		//	draw_gameover()
-		//	while (key a not presed){inget}
-		//	intitializera
-		//	win=0
-		//}
->>>>>>> 1e9869aa7172fe1220982b5b300188af67844b57
 	}
 	
 }
