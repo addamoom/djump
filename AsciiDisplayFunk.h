@@ -1,5 +1,5 @@
-void ascii_ctrl_bit_set(void);
-void ascii_ctrl_bit_clear(void); 
+void ascii_ctrl_bit_set(unsigned char);
+void ascii_ctrl_bit_clear(unsigned char); 
 void ascii_write_controller(unsigned char command);
 unsigned char ascii_read_controller(void);
 void ascii_write_cmd(unsigned char command);

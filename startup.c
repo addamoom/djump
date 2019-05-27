@@ -82,7 +82,7 @@ void move_object(POBJECT o){
 	{
 		if(collision_flag == HOR_EDGE)
 		{
-			o->diry = -(o->diry)-5;
+			o->diry = -(o->diry)-3;
 			o->posy += o->diry;
 		}
 		if(collision_flag == VERT_EDGE)
@@ -98,16 +98,16 @@ void move_object(POBJECT o){
 		sizex = o->geo->sizex;
 		sizey = o->geo->sizey;
 	
-		if(o->posx<1){
+		if(o->posx < 1){
 			o->posx = 1;
 			collision_flag = VERT_EDGE;
 		}
 	
 		if((o->posx > (129-sizex))) {
-			o->posx = 129-sizex;
+			o->posx = 129;
 			collision_flag = VERT_EDGE;
 		}
-		if(o->posy<1){
+		if(o->posy < 1){
 			o->posy = 1;
 			collision_flag = HOR_EDGE;
 		}
@@ -138,7 +138,9 @@ static OBJECT platform ={
 
 void main(void)
 {
-	char init_message[] = "PRESS ANY KEY TO START!";
+	char *s;
+	char init_message1[] = "PRESS ANY KEY";
+	char init_message2[] = "TO START!";
 	char start_game_message[] = "JUMP ON THE PLATFORMS!";
 	char game_over_message[] = "GAME OVER!";
 	
@@ -148,11 +150,15 @@ void main(void)
 	
 	init_gpio();
 	ascii_init();
-	char *s;
 	ascii_gotoxy(1,1);
-	s = init_message;
+	s = init_message1;
 	while(*s)
 		ascii_write_char(*s++);
+	ascii_gotoxy(1,2);
+	s = init_message2;
+	while(*s)
+		ascii_write_char(*s++);
+	
 	
 	graphic_initialize();
 	#ifndef SIMULATOR
@@ -161,12 +167,13 @@ void main(void)
 	
 	game_over_flag = 0;
 	collision_flag = 0;
-	p->set_speed(p, 2, 2);
+	p->set_speed(p, 3, 2);
 	plat->draw(plat);
 	while(1)
 	{
 		p->move(p);
-		collision_flag = platColDetect(p,plat);
+		if(!collision_flag)
+			collision_flag = platColDetect(p,plat);
 		draw_object(p);
 		delay_milli(40);
 		
