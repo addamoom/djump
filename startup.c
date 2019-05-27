@@ -44,7 +44,7 @@ GEOMETRY plat_geometry =
 };
 
 
-#define stick (*((volatile systick *) 0xE000E010))
+/*#define stick (*((volatile systick *) 0xE000E010))
 #define GPIO_E (*((volatile GPIO *) 0x40021000))
 #define B_E (unsigned char) 0x40
 #define B_SELECT (unsigned char) 0x04
@@ -58,7 +58,13 @@ GEOMETRY plat_geometry =
 #define LCD_SET_ADD (unsigned char) 0x40
 #define LCD_SET_PAGE (unsigned char) 0xB8
 #define LCD_DISP_START (unsigned char) 0xC0
-#define LCD_BUSY (unsigned char) 0x80
+#define LCD_BUSY (unsigned char) 0x80*/
+
+static unsigned char game_over_flag;
+static unsigned char collision_flag;
+// värden för collision_flag
+#define HOR_EDGE 1
+#define VERT_EDGE 2
 
 
 void set_object_speed(POBJECT o,int speedx,int speedy)
@@ -85,26 +91,47 @@ void clear_object(POBJECT o){
 void move_object(POBJECT o){
 	int sizex, sizey;	
 	clear_object(o);
-	doodleAcceleration(o);
-	o->posx += o->dirx; 
-	o->posy	+= o->diry;
-	sizex = o->geo->sizex;
-	sizey = o->geo->sizey;
 	
-	if((o->posx<1)||(o->posx > (129-sizex))){
-		o->dirx = ~(o->dirx);
-		o->posx += o->dirx;
-	}
-	if(o->posy<1){
-		o->diry = ~(o->diry);
-		o->posy += o->diry;
-	}
+	if(collision_flag)
+	{
+		if(collision_flag == HOR_EDGE)
+		{
+			o->diry = -(o->diry)-5;
+			o->posy += o->diry;
+		}
+		if(collision_flag == VERT_EDGE)
+		{
+			o->dirx = -(o->dirx);
+			o->posx += o->dirx;
+		}
+		collision_flag = 0;
+	} else {
+		doodleAcceleration(o);
+		o->posx += o->dirx; 
+		o->posy	+= o->diry;
+		sizex = o->geo->sizex;
+		sizey = o->geo->sizey;
 	
-	if(o->posy>(65-sizey))
-		game_over(o);
-		
-	draw_object(o);
+		if(o->posx<1){
+			o->posx = 1;
+			collision_flag = VERT_EDGE;
+		}
+	
+		if((o->posx > (129-sizex))) {
+			o->posx = 128;
+			collision_flag = VERT_EDGE;
+		}
+		if(o->posy<1){
+			o->posy = 1;
+			collision_flag = HOR_EDGE;
+		}
+	
+		if(o->posy>(65-sizey))
+			drawGameOver(o);
+	}
+		draw_object(o);
 }
+
 static OBJECT ball ={
 	&ball_geometry,
 	0,0,
@@ -128,18 +155,32 @@ void main(void)
 {
 	POBJECT p = &ball;
 	POBJECT plat = &platform;
+	unsigned char key_press;
+	
 	init_gpio();
 	graphic_initialize();
 	#ifndef SIMULATOR
 		graphics_clear_screen();
 	#endif
-	p->set_speed(p, 1, 0);
+	
+	game_over_flag = 0;
+	collision_flag = 0;
+	p->set_speed(p, 6, 2);
 	plat->draw(plat);
 	while(1)
 	{
 		p->move(p);
-		
 		delay_milli(40);
+		
+		if(game_over_flag)
+		{
+			drawGameOver(p);
+			while(1)
+			{
+				//vänta på keyb
+			}
+			
+		}
 	}
 	
 }
