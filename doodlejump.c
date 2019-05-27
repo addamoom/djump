@@ -8,7 +8,7 @@ void draw_platform(POBJECT o){
 	
 	POINT p;
 
-	for(int i=0;i<10;i++){
+	for(int i=0;i<20-score;i++){
 		p = o->geo->px[i];
 		pixel(o->posx+p.x,o->posy+p.y,1); //bör försöka lösa implicit varningen här genom att flytta runt functionerna (funkar dock ändå eftersom pixel returnerar void)
 	}
@@ -16,9 +16,8 @@ void draw_platform(POBJECT o){
 
 void genNewPlatform(POBJECT plat,int score){
 	//this function moves the platform to a new position
-	POINT positions[] = {{30,50}, {50,50}, {60,50}, {70,50}};
-	
-	int i = score%4;
+	POINT positions[] = {{30,50}, {90,40}, {60,45}, {15,50},{80,55}, {60,40}, {20,30}, {70,50}};
+	int i = score%8;
 	
 	plat->posx = (int) positions[(int) i].x;
 	plat->posy = (int) positions[(int) i].y;
@@ -97,7 +96,7 @@ unsigned char platColDetect(POBJECT ball, POBJECT platform){
 
 	ballLine = calcLine(curr,next);*/
 	
-	for(int i =0;i<platform->geo->numpoints;i++){
+	for(int i =0;i<platform->geo->numpoints-score;i++){
 		for(int j =0;j<ball->geo->sizex;j++){
 			for(int k =0;k<ball->geo->sizey;k++){
 				if((ball->posx+j==(platform->posx+i)) & (ball->posy+k==platform->posy)){
