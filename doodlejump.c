@@ -1,7 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
-
 #include "doodlejump.h"
 #include "displayfunk.h"
 #include "types.h"
@@ -24,8 +22,6 @@ void genNewPlatform(POBJECT plat,int score){
 	
 	plat->posx = (int) positions[(int) i].x;
 	plat->posy = (int) positions[(int) i].y;
-	plat->posx = (char) rand() % 60;
-	plat->posy = 50;
 	plat->clear(plat);
 	draw_platform(plat);
 	
