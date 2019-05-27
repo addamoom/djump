@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include "displayfunk.h"
 #include "doodlejump.h"
+#include "AsciiDisplayFunk.h"
 
 void startup(void) __attribute__((naked)) __attribute__((section (".start_section")) );
 
@@ -137,11 +138,22 @@ static OBJECT platform ={
 
 void main(void)
 {
+	char init_message[] = "PRESS ANY KEY TO START!";
+	char start_game_message[] = "JUMP ON THE PLATFORMS!";
+	char game_over_message[] = "GAME OVER!";
+	
 	POBJECT p = &ball;
 	POBJECT plat = &platform;
 	unsigned char key_press;
 	
 	init_gpio();
+	ascii_init();
+	char *s;
+	ascii_gotoxy(1,1);
+	s = init_message;
+	while(*s)
+		ascii_write_char(*s++);
+	
 	graphic_initialize();
 	#ifndef SIMULATOR
 		graphics_clear_screen();

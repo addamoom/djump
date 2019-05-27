@@ -2,7 +2,7 @@
 #include "types.h"
 #include <stdlib.h>
 
-#define stick (*((volatile systick *) 0xE000E010))
+/*#define stick (*((volatile systick *) 0xE000E010))
 #define GPIO_E (*((volatile GPIO *) 0x40021000))
 #define B_E (unsigned char) 0x40
 #define B_SELECT (unsigned char) 0x04
@@ -16,7 +16,7 @@
 #define LCD_SET_ADD (unsigned char) 0x40
 #define LCD_SET_PAGE (unsigned char) 0xB8
 #define LCD_DISP_START (unsigned char) 0xC0
-#define LCD_BUSY (unsigned char) 0x80
+#define LCD_BUSY (unsigned char) 0x80 */
 
 void delay_250ns(void){
 		stick.ctrl &= 0xfffffff7;

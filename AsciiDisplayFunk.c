@@ -1,5 +1,6 @@
 #include "types.h"
 #include "displayfunk.h"
+#include "AsciiDisplayFunk.h"
 
 /*Addressera ascii-display och ettställ bitar som är i x*/
 void ascii_ctrl_bit_set(unsigned char x)
