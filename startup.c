@@ -70,7 +70,7 @@ void draw_object(POBJECT o){
 }
 void clear_object(POBJECT o){
 	POINT p;
-	for(int i=0;i<12;i++){
+	for(int i=0;i<o->geo->numpoints;i++){
 		p = o->geo->px[i];
 		pixel(o->posx+p.x,o->posy+p.y,0);
 	}
@@ -211,7 +211,7 @@ void main(void)
 		}
 		p->move(p);
 		if(!collision_flag){
-			collision_flag = platColDetect(p,plat);
+			collision_flag = platColDetect(p,plat,score);
 			if(collision_flag)
 			{
 				score++;

@@ -81,7 +81,7 @@ struct colLine calcLine(POINT curr, POINT next){
 	return temp;*/
 }
 
-unsigned char platColDetect(POBJECT ball, POBJECT platform){
+unsigned char platColDetect(POBJECT ball, POBJECT platform,int score);{
 	
 	/*POINT curr;
 	curr.x=ball->posx;
@@ -110,7 +110,7 @@ unsigned char platColDetect(POBJECT ball, POBJECT platform){
 	return 0;
 }
 void doodleAcceleration (POBJECT o) {
-	if(o->diry < 4 )
+	if(o->diry < 8 )
 	{
 		o->diry += 1;
 	}
