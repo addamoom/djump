@@ -110,7 +110,7 @@ unsigned char platColDetect(POBJECT ball, POBJECT platform){
 	return 0;
 }
 void doodleAcceleration (POBJECT o) {
-	if(o->diry < 8 )
+	if(o->diry < 4 )
 	{
 		o->diry += 1;
 	}

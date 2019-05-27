@@ -169,7 +169,7 @@ void init_game(POBJECT ball, POBJECT plat)
 	
 	//initial hastighet
 	ball->set_speed(ball, 3, 2);
-	plat->draw(plat);
+	draw_platform(plat);
 	
 }
 
