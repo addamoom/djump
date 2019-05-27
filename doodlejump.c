@@ -17,7 +17,7 @@ void draw_platform(POBJECT o){
 
 void genNewPlatform(POBJECT plat, char i){
 	//this function moves the platform to a new position
-	POINT positions[] = {{50,7}, {50,15}, {40,36}, {45,47}};
+	POINT positions[] = {{30,50}, {50,50}, {60,50}, {70,50}};
 	
 	i = i%4;
 	
@@ -25,6 +25,7 @@ void genNewPlatform(POBJECT plat, char i){
 	plat->posy = (int) positions[(int) i].y;
 	plat->clear(plat);
 	draw_platform(plat);
+	
 	
 }
 struct colLine calcLine(POINT curr, POINT next){
@@ -100,6 +101,7 @@ unsigned char platColDetect(POBJECT ball, POBJECT platform){
 		for(int j =0;j<ball->geo->sizex;j++){
 			for(int k =0;k<ball->geo->sizey;k++){
 				if((ball->posx+j==(platform->posx+i)) & (ball->posy+k==platform->posy)){
+					clear_object(platform);
 					genNewPlatform(platform, score);
 					return 1;
 				}
