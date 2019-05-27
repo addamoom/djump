@@ -50,6 +50,7 @@ GEOMETRY plat_geometry =
 static unsigned char new_game_flag;
 static unsigned char game_over_flag;
 static unsigned char collision_flag;
+static int score;
 // värden för collision_flag
 #define HOR_EDGE 1
 #define VERT_EDGE 2
