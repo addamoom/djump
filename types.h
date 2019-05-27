@@ -49,4 +49,10 @@ typedef struct tObj{
 	void (* set_speed ) (struct tObj *,int,int);
 } OBJECT, *POBJECT;
 
+typedef struct colLine
+{
+	int numpoints;
+	POINT px[ MAX_POINTS ];
+} LINE, *PLINE;
+
 #endif

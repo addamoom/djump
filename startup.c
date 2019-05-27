@@ -66,6 +66,8 @@ static unsigned char collision_flag;
 #define HOR_EDGE 1
 #define VERT_EDGE 2
 
+int score;
+
 
 void set_object_speed(POBJECT o,int speedx,int speedy)
 {
@@ -144,7 +146,7 @@ static OBJECT ball ={
 static OBJECT platform ={
 	&plat_geometry,
 	0,0,
-	40,30,
+	50,50,
 	draw_object,
 	clear_object,
 	move_object,
@@ -162,14 +164,19 @@ void main(void)
 	#ifndef SIMULATOR
 		graphics_clear_screen();
 	#endif
+<<<<<<< HEAD
 	
 	game_over_flag = 0;
 	collision_flag = 0;
 	p->set_speed(p, 6, 2);
+=======
+	p->set_speed(p, 3, 3);
+>>>>>>> 1e9869aa7172fe1220982b5b300188af67844b57
 	plat->draw(plat);
 	while(1)
 	{
 		p->move(p);
+<<<<<<< HEAD
 		delay_milli(40);
 		
 		if(game_over_flag)
@@ -181,6 +188,18 @@ void main(void)
 			}
 			
 		}
+=======
+		platColDetect(p,plat);
+		
+		delay_milli(40);
+		
+		//if(win){
+		//	draw_gameover()
+		//	while (key a not presed){inget}
+		//	intitializera
+		//	win=0
+		//}
+>>>>>>> 1e9869aa7172fe1220982b5b300188af67844b57
 	}
 	
 }
