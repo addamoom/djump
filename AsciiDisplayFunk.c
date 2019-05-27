@@ -134,3 +134,12 @@ void ascii_gotoxy(int x, int y)
 	ascii_write_cmd(0x80|address);
 	delay_mikro(39);
 }
+
+void ascii_clear_display(void)
+{
+	while(ascii_read_status() & 0x80)
+	{}
+	delay_mikro(8);
+	ascii_write_cmd(0x01);
+	delay_milli(2);
+} 

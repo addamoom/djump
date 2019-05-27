@@ -3,7 +3,6 @@
 #include "doodlejump.h"
 #include "displayfunk.h"
 #include "types.h"
-#include "displayfunk.h"
 
 extern int score;
 
@@ -133,13 +132,7 @@ void drawGameOver(POBJECT o) {
 		
 	}
 	
-	// ascii clear display
-	while(ascii_read_status() & 0x80)
-	{}
-	delay_mikro(8);
-	ascii_write_cmd(0x01);
-	delay_milli(2);
-	
+	ascii_clear_display();
 	ascii_gotoxy(1,1);
 	s = game_over_mess;
 	while(*s)

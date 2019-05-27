@@ -9,4 +9,4 @@ unsigned char ascii_read_data(void);
 void ascii_init(void);
 void ascii_write_char(unsigned char c);
 void ascii_gotoxy(int x, int y);
-  
+void ascii_clear_display(void);
