@@ -43,23 +43,6 @@ GEOMETRY plat_geometry =
 		}
 };
 
-
-/*#define stick (*((volatile systick *) 0xE000E010))
-#define GPIO_E (*((volatile GPIO *) 0x40021000))
-#define B_E (unsigned char) 0x40
-#define B_SELECT (unsigned char) 0x04
-#define B_RW (unsigned char) 0x02
-#define B_RS (unsigned char) 0x01
-#define B_CS1 (unsigned char) 0x08
-#define B_CS2 (unsigned char) 0x10
-#define B_RST (unsigned char) 0x20
-#define LCD_ON (unsigned char) 0x3F
-#define LCD_OFF (unsigned char) 0x3E
-#define LCD_SET_ADD (unsigned char) 0x40
-#define LCD_SET_PAGE (unsigned char) 0xB8
-#define LCD_DISP_START (unsigned char) 0xC0
-#define LCD_BUSY (unsigned char) 0x80*/
-
 static unsigned char game_over_flag;
 static unsigned char collision_flag;
 // värden för collision_flag
@@ -120,7 +103,7 @@ void move_object(POBJECT o){
 		}
 	
 		if((o->posx > (129-sizex))) {
-			o->posx = 128;
+			o->posx = 129-sizex;
 			collision_flag = VERT_EDGE;
 		}
 		if(o->posy<1){
@@ -131,7 +114,6 @@ void move_object(POBJECT o){
 		if(o->posy>(65-sizey))
 			drawGameOver(o);
 	}
-		draw_object(o);
 }
 
 static OBJECT ball ={
@@ -172,6 +154,8 @@ void main(void)
 	while(1)
 	{
 		p->move(p);
+		collision_flag = platColDetect(p,plat);
+		draw_object(p);
 		delay_milli(40);
 		
 		if(game_over_flag)
