@@ -165,7 +165,6 @@ void main(void)
 			{
 				//vänta på keyb
 			}
-			
 		}
 	}
 	
