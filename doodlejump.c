@@ -4,7 +4,7 @@
 #include "displayfunk.h"
 #include "types.h"
 
-void draw_platform(POBJECT o){
+void draw_platform(POBJECT o,int score){
 	
 	POINT p;
 
@@ -22,7 +22,7 @@ void genNewPlatform(POBJECT plat,int score){
 	plat->posx = (int) positions[(int) i].x;
 	plat->posy = (int) positions[(int) i].y;
 	plat->clear(plat);
-	draw_platform(plat);
+	draw_platform(plat, inte score);
 	
 	
 }
