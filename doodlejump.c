@@ -1,11 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
+
 #include "doodlejump.h"
 #include "displayfunk.h"
 #include "types.h"
 #include "displayfunk.h"
-
-extern int score;
 
 void draw_platform(POBJECT o){
 	
@@ -17,14 +17,16 @@ void draw_platform(POBJECT o){
 	}
 }
 
-void genNewPlatform(POBJECT plat, char i){
+void genNewPlatform(POBJECT plat,int score){
 	//this function moves the platform to a new position
 	POINT positions[] = {{30,50}, {50,50}, {60,50}, {70,50}};
 	
-	i = i%4;
+	int i = score%4;
 	
 	plat->posx = (int) positions[(int) i].x;
 	plat->posy = (int) positions[(int) i].y;
+	plat->posx = (char) rand() % 60;
+	plat->posy = 50;
 	plat->clear(plat);
 	draw_platform(plat);
 	
