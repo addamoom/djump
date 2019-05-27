@@ -22,6 +22,7 @@ void graphics_clear_screen(void);
 void pixel(unsigned char x, unsigned char y,unsigned set);
 
 #define stick (*((volatile systick *) 0xE000E010))
+#define GPIO_D (*((volatile GPIO*) 0x40020C00))
 #define GPIO_E (*((volatile GPIO *) 0x40021000))
 #define B_E (unsigned char) 0x40
 #define B_SELECT (unsigned char) 0x04

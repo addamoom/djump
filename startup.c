@@ -8,6 +8,7 @@
 #include "displayfunk.h"
 #include "doodlejump.h"
 #include "AsciiDisplayFunk.h"
+#include "keyb.h"
 
 void startup(void) __attribute__((naked)) __attribute__((section (".start_section")) );
 
@@ -168,6 +169,7 @@ void main(void)
 	collision_flag = 0;
 	p->set_speed(p, 3, 2);
 	plat->draw(plat);
+	unsigned char c;
 	while(1)
 	{
 		p->move(p);
@@ -175,6 +177,11 @@ void main(void)
 			collision_flag = platColDetect(p,plat);
 		draw_object(p);
 		delay_milli(40);
+		c=keyb();
+		switch(c){
+			case 6: 	p->set_speed(p,2,p->diry); break;
+			case 4: 	p->set_speed(p,-2,p->diry); break;
+		}
 		
 		if(game_over_flag)
 		{
