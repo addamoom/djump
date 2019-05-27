@@ -82,7 +82,7 @@ struct colLine calcLine(POINT curr, POINT next){
 	return temp;*/
 }
 
-void platColDetect(POBJECT ball, POBJECT platform){
+unsigned char platColDetect(POBJECT ball, POBJECT platform){
 	
 	POINT curr;
 	curr.x=ball->posx;
@@ -96,13 +96,17 @@ void platColDetect(POBJECT ball, POBJECT platform){
 	
 	ballLine = calcLine(curr,next);
 	
-	for(int i =0;i<10;i++){
-		if((ball->posx==(platform->posx+i)) & (ball->posy==platform->posy)){
-			ball->set_speed(ball, ball->dirx, -ball->diry+2);
-			genNewPlatform(platform, score);
-			
+	for(int i =0;i<platform->geo->numpoints;i++){
+		for(int j =0;j<ball->geo->sizex;j++){
+			for(int k =0;k<ball->geo->sizey;k++){
+				if((ball->posx+j==(platform->posx+i)) & (ball->posy+k==platform->posy)){
+					genNewPlatform(platform, score);
+					return 1;
+				}
+			}
 		}
 	}
+	return 0;
 }
 void doodleAcceleration (POBJECT o) {
 	if(o->diry < 8 )

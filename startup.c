@@ -149,7 +149,7 @@ void main(void)
 	
 	game_over_flag = 0;
 	collision_flag = 0;
-	p->set_speed(p, 6, 2);
+	p->set_speed(p, 2, 2);
 	plat->draw(plat);
 	while(1)
 	{
