@@ -55,4 +55,5 @@ typedef struct colLine
 	POINT px[ MAX_POINTS ];
 } LINE, *PLINE;
 
+static int score;
 #endif

@@ -51,9 +51,6 @@ static unsigned char collision_flag;
 #define HOR_EDGE 1
 #define VERT_EDGE 2
 
-static int score;
-
-
 void set_object_speed(POBJECT o,int speedx,int speedy)
 {
 	o->dirx = speedx;
@@ -144,14 +141,10 @@ void init_game(POBJECT ball, POBJECT plat)
 	char init_message2[] = "TO START!";
 	score = 0;
 	
-	//graphics_clear_screen();
-	// ascii clear display
-	while(ascii_read_status() & 0x80)
-	{}
-	delay_mikro(8);
-	ascii_write_cmd(0x01);
-	delay_milli(2);
-	
+	#ifndef SIMULATOR
+		graphics_clear_screen();
+	#endif 
+	ascii_clear_display();
 	ascii_gotoxy(1,1);
 	s = init_message1;
 	while(*s)
@@ -191,7 +184,12 @@ void main(void)
 		p->move(p);
 		if(!collision_flag){
 			collision_flag = platColDetect(p,plat);
-			score++;
+			if(collision_flag)
+			{
+				score++;
+				ascii_clear_display();
+				ascii_write_char((char) score);
+			}
 		}
 			
 		draw_object(p);
