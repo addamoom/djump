@@ -118,7 +118,8 @@ void doodleAcceleration (POBJECT o) {
 }
 void drawGameOver(POBJECT o) {
 	char *s; 
-	char game_over_mess[] = "GAME OVER!"; 
+	char game_over_mess1[] = "GAME OVER!";
+	char game_over_mess2[] = "PRESS 5 TO RETRY.";
 	
 	for(int i=0; i<8;i++){
 		graphic_write_command(LCD_SET_PAGE | i , B_CS1|B_CS2);
@@ -131,7 +132,11 @@ void drawGameOver(POBJECT o) {
 	
 	ascii_clear_display();
 	ascii_gotoxy(1,1);
-	s = game_over_mess;
+	s = game_over_mess1;
+	while(*s)
+		ascii_write_char(*s++);
+	ascii_gotoxy(1,2);
+	s = game_over_mess2;
 	while(*s)
 		ascii_write_char(*s++);
 }
