@@ -45,6 +45,7 @@ GEOMETRY plat_geometry =
 		}
 };
 
+static unsigned char new_game_flag;
 static unsigned char game_over_flag;
 static unsigned char collision_flag;
 // värden för collision_flag
@@ -153,11 +154,18 @@ void init_game(POBJECT ball, POBJECT plat)
 	s = init_message2;
 	while(*s)
 		ascii_write_char(*s++);
+		
+	//flags + score
 	game_over_flag = 0;
 	collision_flag = 0;
+	new_game_flag = 1;
+	score = 0;
+	
+	// initial position
 	ball->posx = 40;
-	ball->posy = 35;
-	score = 0; 
+	ball->posy = 10;
+	
+	//initial hastighet
 	ball->set_speed(ball, 3, 2);
 	plat->draw(plat);
 	
@@ -165,7 +173,9 @@ void init_game(POBJECT ball, POBJECT plat)
 
 void main(void)
 {
-	char start_game_message[] = "JUMP ON THE PLATFORMS!";
+	char *s;
+	char start_game_message1[] = "JUMP ON THE";
+	char start_game_message2[] = "PLATFORMS, OR DIE!";
 	
 	POBJECT p = &ball;
 	POBJECT plat = &platform;
@@ -181,6 +191,22 @@ void main(void)
 	unsigned char c;
 	while(1)
 	{
+		if(new_game_flag)
+		{
+			while(1){
+				c = keyb();
+				if(c != 0xff) break;
+			}
+			ascii_clear_display();
+			s = start_game_message1;
+			while(*s)
+				ascii_write_char(*s++);
+			ascii_gotoxy(1,2);
+			s = start_game_message2;
+			while(*s)
+				ascii_write_char(*s++);
+			new_game_flag = 0;
+		}
 		p->move(p);
 		if(!collision_flag){
 			collision_flag = platColDetect(p,plat);
@@ -196,8 +222,8 @@ void main(void)
 		delay_milli(40);
 		c=keyb();
 		switch(c){
-			case 6: 	p->set_speed(p,2,p->diry); break;
-			case 4: 	p->set_speed(p,-2,p->diry); break;
+			case 3: 	p->set_speed(p,4,p->diry); break;
+			case 1: 	p->set_speed(p,-4,p->diry); break;
 		}
 		
 		if(game_over_flag)
