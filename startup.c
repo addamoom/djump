@@ -135,22 +135,23 @@ static OBJECT platform ={
 	clear_object,
 	move_object,
 	set_object_speed
-};			
+};	
 
-void main(void)
+void init_game(POBJECT ball, POBJECT plat)
 {
 	char *s;
 	char init_message1[] = "PRESS ANY KEY";
 	char init_message2[] = "TO START!";
-	char start_game_message[] = "JUMP ON THE PLATFORMS!";
 	score = 0;
 	
-	POBJECT p = &ball;
-	POBJECT plat = &platform;
-	unsigned char key_press;
+	//graphics_clear_screen();
+	// ascii clear display
+	while(ascii_read_status() & 0x80)
+	{}
+	delay_mikro(8);
+	ascii_write_cmd(0x01);
+	delay_milli(2);
 	
-	init_gpio();
-	ascii_init();
 	ascii_gotoxy(1,1);
 	s = init_message1;
 	while(*s)
@@ -159,17 +160,31 @@ void main(void)
 	s = init_message2;
 	while(*s)
 		ascii_write_char(*s++);
+	game_over_flag = 0;
+	collision_flag = 0;
+	ball->posx = 40;
+	ball->posy = 35;
+	score = 0; 
+	ball->set_speed(ball, 3, 2);
+	plat->draw(plat);
 	
+}
+
+void main(void)
+{
+	char start_game_message[] = "JUMP ON THE PLATFORMS!";
 	
+	POBJECT p = &ball;
+	POBJECT plat = &platform;
+	
+	init_gpio();
+	ascii_init();
 	graphic_initialize();
 	#ifndef SIMULATOR
 		graphics_clear_screen();
 	#endif
 	
-	game_over_flag = 0;
-	collision_flag = 0;
-	p->set_speed(p, 3, 2);
-	plat->draw(plat);
+	init_game(p,plat);
 	unsigned char c;
 	while(1)
 	{
@@ -193,7 +208,13 @@ void main(void)
 			game_over_flag = 0;
 			while(1)
 			{
-				//vänta på keyb
+				c = keyb();
+				if(c == 5) 
+				{
+					// initiera igen
+					init_game(p,plat);
+					break;
+				}
 			}
 		}
 	}

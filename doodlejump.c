@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "doodlejump.h"
+#include "displayfunk.h"
 #include "types.h"
 #include "displayfunk.h"
 
@@ -127,10 +128,17 @@ void drawGameOver(POBJECT o) {
 		graphic_write_command(LCD_SET_PAGE | i , B_CS1|B_CS2);
 		graphic_write_command(LCD_SET_ADD, B_CS1|B_CS2);
 		for(int j=0; j<64;j++){
-			graphic_write_data(1,B_CS1|B_CS2);
+			graphic_write_data(0xff,B_CS1|B_CS2);
 		}
 		
 	}
+	
+	// ascii clear display
+	while(ascii_read_status() & 0x80)
+	{}
+	delay_mikro(8);
+	ascii_write_cmd(0x01);
+	delay_milli(2);
 	
 	ascii_gotoxy(1,1);
 	s = game_over_mess;
