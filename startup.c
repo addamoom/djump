@@ -113,7 +113,7 @@ void move_object(POBJECT o){
 		}
 	
 		if(o->posy>(65-sizey))
-			drawGameOver(o);
+			game_over_flag = 1;
 	}
 }
 
@@ -142,7 +142,6 @@ void main(void)
 	char init_message1[] = "PRESS ANY KEY";
 	char init_message2[] = "TO START!";
 	char start_game_message[] = "JUMP ON THE PLATFORMS!";
-	char game_over_message[] = "GAME OVER!";
 	
 	POBJECT p = &ball;
 	POBJECT plat = &platform;
@@ -180,6 +179,7 @@ void main(void)
 		if(game_over_flag)
 		{
 			drawGameOver(p);
+			game_over_flag = 0;
 			while(1)
 			{
 				//vänta på keyb

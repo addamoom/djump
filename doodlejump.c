@@ -93,9 +93,9 @@ unsigned char platColDetect(POBJECT ball, POBJECT platform){
 	next.x= ball->posx+ball->dirx;
 	next.y= ball->posy+ball->diry;
 	
-	LINE ballLine;
+	//LINE ballLine;
 	
-	ballLine = calcLine(curr,next);
+	//ballLine = calcLine(curr,next);
 	
 	for(int i =0;i<platform->geo->numpoints;i++){
 		for(int j =0;j<ball->geo->sizex;j++){
@@ -118,7 +118,20 @@ void doodleAcceleration (POBJECT o) {
 	return;
 }
 void drawGameOver(POBJECT o) {
-	// tillfällig
-	o->diry = -(o->diry);
-	o->posy += o->diry;
+	char *s; 
+	char game_over_mess[] = "GAME OVER!"; 
+	
+	for(int i=0; i<8;i++){
+		graphic_write_command(LCD_SET_PAGE | i , B_CS1|B_CS2);
+		graphic_write_command(LCD_SET_ADD, B_CS1|B_CS2);
+		for(int j=0; j<64;j++){
+			graphic_write_data(1,B_CS1|B_CS2);
+		}
+		
+	}
+	
+	ascii_gotoxy(1,1);
+	s = game_over_mess;
+	while(*s)
+		ascii_write_char(*s++);
 }
